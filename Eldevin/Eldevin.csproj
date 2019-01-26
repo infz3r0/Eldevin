@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +64,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="crafting.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EldevinDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EldevinDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EldevinDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EldevinDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EldevinDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="f_getTotalQtyByQuestID_Result.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="item.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="quest.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="quest_req.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="skill.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ucSkillQuest.xaml.cs">
+      <DependentUpon>ucSkillQuest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wSelectQuest.xaml.cs">
+      <DependentUpon>wSelectQuest.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +115,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ucSkillQuest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wSelectQuest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,6 +142,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="EldevinDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EldevinDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EldevinDB.edmx.diagram">
+      <DependentUpon>EldevinDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +157,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EldevinDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EldevinDB.Context.cs</LastGenOutput>
+      <DependentUpon>EldevinDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="EldevinDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EldevinDB.edmx</DependentUpon>
+      <LastGenOutput>EldevinDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

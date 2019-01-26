@@ -24,5 +24,11 @@ namespace Eldevin
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            wSelectQuest wSelectQuest = new wSelectQuest();
+            wSelectQuest.ShowDialog();
+        }
     }
 }
