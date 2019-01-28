@@ -27,20 +27,20 @@ namespace Eldevin
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<crafting> craftings { get; set; }
         public virtual DbSet<item> items { get; set; }
         public virtual DbSet<quest> quests { get; set; }
         public virtual DbSet<quest_req> quest_req { get; set; }
         public virtual DbSet<skill> skills { get; set; }
+        public virtual DbSet<crafting> craftings { get; set; }
     
         [DbFunction("EldevinEntities", "f_getTotalQtyByQuestID")]
-        public virtual IQueryable<f_getTotalQtyByQuestID_Result> f_getTotalQtyByQuestID(string qid)
+        public virtual IQueryable<f_getTotalQtyByQuestID_Result2> f_getTotalQtyByQuestID(string qid)
         {
             var qidParameter = qid != null ?
                 new ObjectParameter("qid", qid) :
                 new ObjectParameter("qid", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<f_getTotalQtyByQuestID_Result>("[EldevinEntities].[f_getTotalQtyByQuestID](@qid)", qidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<f_getTotalQtyByQuestID_Result2>("[EldevinEntities].[f_getTotalQtyByQuestID](@qid)", qidParameter);
         }
     }
 }

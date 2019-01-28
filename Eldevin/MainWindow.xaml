@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Button Name="btnNew" Grid.Row="0" Content="New" Click="BtnNew_Click"></Button>
         
+        <TabControl Name="tabControl" Grid.Row="1">
+            <TabItem Header="All item">
+                <Grid>
+                    <DataGrid Name="dgAllItem"></DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

@@ -10,15 +10,11 @@
 namespace Eldevin
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class crafting
+    public partial class f_getTotalQtyByQuestID1_Result
     {
-        public string item_id { get; set; }
-        public string req_item { get; set; }
-        public Nullable<int> req_quantity { get; set; }
-    
-        public virtual item item { get; set; }
-        public virtual item item1 { get; set; }
+        public string item { get; set; }
+        public Nullable<int> total_quantity { get; set; }
+        public string skill_id { get; set; }
     }
 }

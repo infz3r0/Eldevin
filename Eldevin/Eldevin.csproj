@@ -82,7 +82,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EldevinDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="f_getTotalQtyByQuestID1_Result.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="f_getTotalQtyByQuestID_Result.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="f_getTotalQtyByQuestID_Result1.cs">
+      <DependentUpon>EldevinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="f_getTotalQtyByQuestID_Result2.cs">
       <DependentUpon>EldevinDB.tt</DependentUpon>
     </Compile>
     <Compile Include="item.cs">

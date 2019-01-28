@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EldevinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EldevinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="crafting">
           <Key>
             <PropertyRef Name="item_id" />
@@ -13,7 +13,6 @@
           <Property Name="item_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="req_item" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="req_quantity" Type="int" />
-          <Property Name="skill_id" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -21,6 +20,7 @@
           </Key>
           <Property Name="item_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="item_name" Type="varchar" MaxLength="50" />
+          <Property Name="skill_id" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="quest">
           <Key>
@@ -70,14 +70,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__crafting__skill___52593CB8">
-          <End Role="skill" Type="Self.skill" Multiplicity="1" />
-          <End Role="crafting" Type="Self.crafting" Multiplicity="*" />
+        <Association Name="FK__item__skill_id__01142BA1">
+          <End Role="skill" Type="Self.skill" Multiplicity="0..1" />
+          <End Role="item" Type="Self.item" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="skill">
               <PropertyRef Name="skill_id" />
             </Principal>
-            <Dependent Role="crafting">
+            <Dependent Role="item">
               <PropertyRef Name="skill_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -125,6 +125,7 @@
               <RowType>
                 <Property Name="item" Type="varchar" MaxLength="50" />
                 <Property Name="total_quantity" Type="int" />
+                <Property Name="skill_id" Type="varchar" MaxLength="20" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -143,9 +144,9 @@
             <End Role="item" EntitySet="item" />
             <End Role="crafting" EntitySet="crafting" />
           </AssociationSet>
-          <AssociationSet Name="FK__crafting__skill___52593CB8" Association="Self.FK__crafting__skill___52593CB8">
+          <AssociationSet Name="FK__item__skill_id__01142BA1" Association="Self.FK__item__skill_id__01142BA1">
             <End Role="skill" EntitySet="skill" />
-            <End Role="crafting" EntitySet="crafting" />
+            <End Role="item" EntitySet="item" />
           </AssociationSet>
           <AssociationSet Name="FK__quest__skill_id__5165187F" Association="Self.FK__quest__skill_id__5165187F">
             <End Role="skill" EntitySet="skill" />
@@ -160,8 +161,7 @@
             <End Role="quest_req" EntitySet="quest_req" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EldevinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -169,28 +169,17 @@
           <Property Name="item" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="total_quantity" Type="Int32" />
         </ComplexType>
-        <EntityType Name="crafting">
-          <Key>
-            <PropertyRef Name="item_id" />
-            <PropertyRef Name="req_item" />
-          </Key>
-          <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="req_item" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="req_quantity" Type="Int32" />
-          <Property Name="skill_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="item" Relationship="Self.FK__crafting__item_i__5535A963" FromRole="crafting" ToRole="item" />
-          <NavigationProperty Name="item1" Relationship="Self.FK__crafting__req_it__5629CD9C" FromRole="crafting" ToRole="item" />
-          <NavigationProperty Name="skill" Relationship="Self.FK__crafting__skill___52593CB8" FromRole="crafting" ToRole="skill" />
-        </EntityType>
         <EntityType Name="item">
           <Key>
             <PropertyRef Name="item_id" />
           </Key>
           <Property Name="item_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="item_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="craftings" Relationship="Self.FK__crafting__item_i__5535A963" FromRole="item" ToRole="crafting" />
-          <NavigationProperty Name="craftings1" Relationship="Self.FK__crafting__req_it__5629CD9C" FromRole="item" ToRole="crafting" />
           <NavigationProperty Name="quest_req" Relationship="Self.FK__quest_req__item___5441852A" FromRole="item" ToRole="quest_req" />
+          <Property Name="skill_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="skill" Relationship="EldevinModel.FK__item__skill_id__01142BA1" FromRole="item" ToRole="skill" />
+          <NavigationProperty Name="craftings" Relationship="EldevinModel.FK__crafting__item_i__5535A963" FromRole="item" ToRole="crafting" />
+          <NavigationProperty Name="craftings1" Relationship="EldevinModel.FK__crafting__req_it__5629CD9C" FromRole="item" ToRole="crafting" />
         </EntityType>
         <EntityType Name="quest">
           <Key>
@@ -219,45 +208,9 @@
           </Key>
           <Property Name="skill_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="skill_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="craftings" Relationship="Self.FK__crafting__skill___52593CB8" FromRole="skill" ToRole="crafting" />
           <NavigationProperty Name="quests" Relationship="Self.FK__quest__skill_id__5165187F" FromRole="skill" ToRole="quest" />
+          <NavigationProperty Name="items" Relationship="EldevinModel.FK__item__skill_id__01142BA1" FromRole="skill" ToRole="item" />
         </EntityType>
-        <Association Name="FK__crafting__item_i__5535A963">
-          <End Role="item" Type="Self.item" Multiplicity="1" />
-          <End Role="crafting" Type="Self.crafting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="item">
-              <PropertyRef Name="item_id" />
-            </Principal>
-            <Dependent Role="crafting">
-              <PropertyRef Name="item_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__crafting__req_it__5629CD9C">
-          <End Role="item" Type="Self.item" Multiplicity="1" />
-          <End Role="crafting" Type="Self.crafting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="item">
-              <PropertyRef Name="item_id" />
-            </Principal>
-            <Dependent Role="crafting">
-              <PropertyRef Name="req_item" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__crafting__skill___52593CB8">
-          <End Role="skill" Type="Self.skill" Multiplicity="1" />
-          <End Role="crafting" Type="Self.crafting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="skill">
-              <PropertyRef Name="skill_id" />
-            </Principal>
-            <Dependent Role="crafting">
-              <PropertyRef Name="skill_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__quest_req__item___5441852A">
           <End Role="item" Type="Self.item" Multiplicity="1" />
           <End Role="quest_req" Type="Self.quest_req" Multiplicity="*" />
@@ -295,23 +248,10 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EldevinEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="craftings" EntityType="Self.crafting" />
           <EntitySet Name="items" EntityType="Self.item" />
           <EntitySet Name="quests" EntityType="Self.quest" />
           <EntitySet Name="quest_req" EntityType="Self.quest_req" />
           <EntitySet Name="skills" EntityType="Self.skill" />
-          <AssociationSet Name="FK__crafting__item_i__5535A963" Association="Self.FK__crafting__item_i__5535A963">
-            <End Role="item" EntitySet="items" />
-            <End Role="crafting" EntitySet="craftings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__crafting__req_it__5629CD9C" Association="Self.FK__crafting__req_it__5629CD9C">
-            <End Role="item" EntitySet="items" />
-            <End Role="crafting" EntitySet="craftings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__crafting__skill___52593CB8" Association="Self.FK__crafting__skill___52593CB8">
-            <End Role="skill" EntitySet="skills" />
-            <End Role="crafting" EntitySet="craftings" />
-          </AssociationSet>
           <AssociationSet Name="FK__quest_req__item___5441852A" Association="Self.FK__quest_req__item___5441852A">
             <End Role="item" EntitySet="items" />
             <End Role="quest_req" EntitySet="quest_req" />
@@ -324,29 +264,95 @@
             <End Role="quest" EntitySet="quests" />
             <End Role="quest_req" EntitySet="quest_req" />
           </AssociationSet>
-          <FunctionImport Name="f_getTotalQtyByQuestID" IsComposable="true" ReturnType="Collection(EldevinModel.f_getTotalQtyByQuestID_Result)">
+          <AssociationSet Name="FK__item__skill_id__01142BA1" Association="EldevinModel.FK__item__skill_id__01142BA1">
+            <End Role="skill" EntitySet="skills" />
+            <End Role="item" EntitySet="items" />
+          </AssociationSet>
+          <EntitySet Name="craftings" EntityType="EldevinModel.crafting" />
+          <AssociationSet Name="FK__crafting__item_i__5535A963" Association="EldevinModel.FK__crafting__item_i__5535A963">
+            <End Role="item" EntitySet="items" />
+            <End Role="crafting" EntitySet="craftings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__crafting__req_it__5629CD9C" Association="EldevinModel.FK__crafting__req_it__5629CD9C">
+            <End Role="item" EntitySet="items" />
+            <End Role="crafting" EntitySet="craftings" />
+          </AssociationSet>
+          <FunctionImport Name="f_getTotalQtyByQuestID" IsComposable="true" ReturnType="Collection(EldevinModel.f_getTotalQtyByQuestID_Result2)">
             <Parameter Name="qid" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="f_getTotalQtyByQuestID_Result1">
+          <Property Type="String" Name="item" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="total_quantity" Nullable="true" />
+          <Property Type="String" Name="skill_id" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <Association Name="FK__item__skill_id__01142BA1">
+          <End Type="EldevinModel.skill" Role="skill" Multiplicity="0..1" />
+          <End Type="EldevinModel.item" Role="item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skill">
+              <PropertyRef Name="skill_id" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="f_getTotalQtyByQuestID1_Result">
+          <Property Type="String" Name="item" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="total_quantity" Nullable="true" />
+          <Property Type="String" Name="skill_id" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <EntityType Name="crafting">
+          <Key>
+            <PropertyRef Name="item_id" />
+            <PropertyRef Name="req_item" />
+          </Key>
+          <Property Name="item_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="req_item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="req_quantity" Type="Int32" />
+          <NavigationProperty Name="item" Relationship="EldevinModel.FK__crafting__item_i__5535A963" FromRole="crafting" ToRole="item" />
+          <NavigationProperty Name="item1" Relationship="EldevinModel.FK__crafting__req_it__5629CD9C" FromRole="crafting" ToRole="item" />
+        </EntityType>
+        <Association Name="FK__crafting__item_i__5535A963">
+          <End Type="EldevinModel.item" Role="item" Multiplicity="1" />
+          <End Type="EldevinModel.crafting" Role="crafting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="item_id" />
+            </Principal>
+            <Dependent Role="crafting">
+              <PropertyRef Name="item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__crafting__req_it__5629CD9C">
+          <End Type="EldevinModel.item" Role="item" Multiplicity="1" />
+          <End Type="EldevinModel.crafting" Role="crafting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="item_id" />
+            </Principal>
+            <Dependent Role="crafting">
+              <PropertyRef Name="req_item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="f_getTotalQtyByQuestID_Result2">
+          <Property Type="String" Name="item" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="total_quantity" Nullable="true" />
+          <Property Type="String" Name="skill_id" Nullable="true" MaxLength="20" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EldevinModelStoreContainer" CdmEntityContainer="EldevinEntities">
-          <EntitySetMapping Name="craftings">
-            <EntityTypeMapping TypeName="EldevinModel.crafting">
-              <MappingFragment StoreEntitySet="crafting">
-                <ScalarProperty Name="item_id" ColumnName="item_id" />
-                <ScalarProperty Name="req_item" ColumnName="req_item" />
-                <ScalarProperty Name="req_quantity" ColumnName="req_quantity" />
-                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="items">
             <EntityTypeMapping TypeName="EldevinModel.item">
               <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
                 <ScalarProperty Name="item_id" ColumnName="item_id" />
                 <ScalarProperty Name="item_name" ColumnName="item_name" />
               </MappingFragment>
@@ -378,11 +384,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionName="EldevinModel.Store.f_getTotalQtyByQuestID" FunctionImportName="f_getTotalQtyByQuestID">
+          <EntitySetMapping Name="craftings">
+            <EntityTypeMapping TypeName="EldevinModel.crafting">
+              <MappingFragment StoreEntitySet="crafting">
+                <ScalarProperty Name="req_quantity" ColumnName="req_quantity" />
+                <ScalarProperty Name="req_item" ColumnName="req_item" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="f_getTotalQtyByQuestID" FunctionName="EldevinModel.Store.f_getTotalQtyByQuestID">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="EldevinModel.f_getTotalQtyByQuestID_Result">
+              <ComplexTypeMapping TypeName="EldevinModel.f_getTotalQtyByQuestID_Result2">
                 <ScalarProperty Name="item" ColumnName="item" />
                 <ScalarProperty Name="total_quantity" ColumnName="total_quantity" />
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

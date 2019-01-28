@@ -36,9 +36,12 @@ namespace Eldevin
 
             if (GetSkill())
             {
+                lblSkillName.Content = skill.skill_name;
                 GetQuests();
                 AddCheckbox();
             }
+
+
         }
 
         private bool GetSkill()
@@ -73,7 +76,6 @@ namespace Eldevin
             foreach (quest q in quests)
             {
                 ckbName = "ckbQuest_" + q.quest_id;
-                ckbName = ckbName.Replace("-", "_");
                 questName = q.quest_name;
 
                 CheckBox checkBox = new CheckBox();
@@ -82,6 +84,22 @@ namespace Eldevin
                 checkBox.Content = questName;
 
                 stpQuests.Children.Add(checkBox);
+            }
+        }
+
+        private void BtnSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (CheckBox ckb in stpQuests.Children)
+            {
+                ckb.IsChecked = true;
+            }
+        }
+
+        private void BtnUnSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (CheckBox ckb in stpQuests.Children)
+            {
+                ckb.IsChecked = false;
             }
         }
 

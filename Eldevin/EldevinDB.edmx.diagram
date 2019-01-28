@@ -5,17 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b66767cbd62640c1a0de056cd628014c" Name="Diagram1">
-        <EntityTypeShape EntityType="EldevinModel.crafting" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EldevinModel.item" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EldevinModel.quest" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EldevinModel.quest_req" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EldevinModel.skill" Width="1.5" PointX="1.5" PointY="10.625" IsExpanded="true" />
-        <AssociationConnector Association="EldevinModel.FK__crafting__item_i__5535A963" ManuallyRouted="false" />
-        <AssociationConnector Association="EldevinModel.FK__crafting__req_it__5629CD9C" ManuallyRouted="false" />
-        <AssociationConnector Association="EldevinModel.FK__crafting__skill___52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="EldevinModel.FK__quest_req__item___5441852A" ManuallyRouted="false" />
         <AssociationConnector Association="EldevinModel.FK__quest__skill_id__5165187F" ManuallyRouted="false" />
         <AssociationConnector Association="EldevinModel.FK__quest_req__quest__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="EldevinModel.FK__item__skill_id__01142BA1" />
+        <EntityTypeShape EntityType="EldevinModel.crafting" Width="1.5" PointX="3" PointY="4" />
+        <AssociationConnector Association="EldevinModel.FK__crafting__item_i__5535A963" />
+        <AssociationConnector Association="EldevinModel.FK__crafting__req_it__5629CD9C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

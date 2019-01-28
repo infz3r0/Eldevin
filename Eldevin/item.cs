@@ -17,19 +17,21 @@ namespace Eldevin
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public item()
         {
+            this.quest_req = new HashSet<quest_req>();
             this.craftings = new HashSet<crafting>();
             this.craftings1 = new HashSet<crafting>();
-            this.quest_req = new HashSet<quest_req>();
         }
     
         public string item_id { get; set; }
         public string item_name { get; set; }
+        public string skill_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<quest_req> quest_req { get; set; }
+        public virtual skill skill { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<crafting> craftings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<crafting> craftings1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<quest_req> quest_req { get; set; }
     }
 }
